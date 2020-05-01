@@ -1,0 +1,69 @@
+Protocol	Port Range	Source	Purpose
+TCP	443	Worker Nodes, API Requests, and End-Users	Kubernetes API server.
+UDP	8285	Master & Worker Nodes	flannel overlay network - udp backend. This is the default network configuration (only required if using flannel)
+UDP	8472	Master & Worker Nodes	flannel overlay network - vxlan backend (only required if using flannel)
+Worker Node Inbound
+
+Protocol	Port Range	Source	Purpose
+TCP	10250	Master Nodes	Worker node Kubelet API for exec and logs.
+TCP	10255	Heapster	Worker node read-only Kubelet API.
+TCP	30000-32767	External Application Consumers	Default port range for external service ports. Typically, these ports would need to be exposed to external load-balancers, or other external consumers of the application itself.
+TCP	ALL	Master & Worker Nodes	Intra-cluster communication (unnecessary if vxlan is used for networking)
+UDP	8285	Master & Worker Nodes	flannel overlay network - udp backend. This is the default network configuration (only required if using flannel)
+UDP	8472	Master & Worker Nodes	flannel overlay network - vxlan backend (only required if using flannel)
+TCP	179	Worker Nodes	Calico BGP network (only required if the BGP backend is used)
+etcd Node Inbound
+
+Protocol	Port Range	Source	Purpose
+TCP	2379-2380	Master Nodes	etcd server client API
+TCP	2379-2380	Worker Nodes	etcd server client API (only required if using flannel or Calico).
+
+Services 	Port used	Protocol
+Ambari Server	8080	http
+Ambari-server	8440	Https
+Ambari-server	8441	Https
+Ambari-agent	8670	tcp
+Hive Server	10000	
+Hive Web UI	9999	http
+Hive Metastore	9083	http
+MapReduce	10020	http
+MapReduce	19888	http
+MapReduce	13562	http
+MySQL	3306	http
+Oozie	11000	TCP
+Oozie	11001	TCP
+Oozie	11443	TCP
+Tez AM, Tez Service	12999	
+Tez AM, Tez Service	10030	
+Resource Manager WebUI	8088	http
+Resource Manager	8050	IPC
+Resource Manager	8025	http
+Scheduler	8030	http
+Resource Manager	8141	http
+NodeManage	45454	http
+Timeline Serve	10200	http
+Timeline Server	8188	http
+Timeline Server	8190	https
+Job History Service	19888	https
+ZooKeeper Server	2888	
+ZooKeeper Server	3888	
+ZooKeeper Server	2181	
+Hue	8888	http
+Name-node	50070	
+Hawq	5432	
+Hawq 	10432	
+NameNode WebUI	50470	https
+NameNode metadata service	8020/ 9000	IPC
+DataNode/HDFS	50075	http
+DataNode/HDFS	50475	https
+DataNode/HDFS	50010	
+DataNode/HDFS	50020	IPC
+Secondary NameNode	50090	http
+Hawq_Segement 	 40000	
+Hawq_Segement 	40001	
+Hawq_Segement 	40002	
+PXF	51200	
+Zeeplin	9995	
+Yarn	8042	
+ssh	22	
+ldap	389	
