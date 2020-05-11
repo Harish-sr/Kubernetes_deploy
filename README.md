@@ -1,6 +1,6 @@
 # SanJose Data Platform Setup on Containers
 ## Contents
-1. Kubernetes Deployment - Server
+1. Kubernetes Deployment - master
 1. Kubernetes Deployment - Client
 1. Scaling Kubernetes and Adding Workers
 1. Removing Workers
@@ -9,6 +9,7 @@
 1. Application Deployment - Zeppelin
 1. Application Deployment - Ambari
 1. Application Deployment - Hortonworks Data Platform
+1. Application Deployment - Kafka
 
 ## Kubernetes Deployment - Server
 The below commands are to be executed on kubernetes master.
@@ -258,5 +259,50 @@ Zeppelin needs the spark-master service to be running.
    664579
    
    Congratulations, you now know how many prime numbers there are within the first 10 million numbers!
+
+## Reset Kubernetes master
+**Setup:**
+1. Login to the kumernetes master
+1. Execute command **kubectl apply -f zoo-keeper.yaml** to start the zookeeper server before starting the kafka services
+   **Validation:** The below must be the output of the command
+   **deployment.extensions/zookeeper-deployment-1 created**
+   **service/zoo1 created**   
+   **Validation: kubectl get pods** The below must be the output of the command
+
+NAMESPACE     NAME                                             READY   STATUS    RESTARTS   AGE
+default       zookeeper-deployment-1-67786c9fc4-tp9kk          1/1     Running   0          34s
+
+1. Execute command **kubectl apply -f kafka-service.yaml** to start the service for kafka
+   **Validation:** The below must be the output of the command
+   **service/kafka-service created**
+1. Execute command **kubectl describe svc kafka-service** to get the output like below having the IP address of the kafka service
+   copy the line **IP: 10.102.113.183** for further use
+      
+
+Name:                     kafka-service
+Namespace:                default
+Labels:                   name=kafka
+Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+                            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"name":"kafka"},"name":"kafka-service","namespace":"default"},"...
+Selector:                 app=kafka,id=0
+Type:                     NodePort
+IP:                       10.102.113.183
+Port:                     kafka-port  9092/TCP
+TargetPort:               9092/TCP
+NodePort:                 kafka-port  30030/TCP
+Endpoints:                <none>
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+
+
+1. Execute command **kubectl apply -f kafka-broker.yaml** to deply the broker
+   **Validation:** The below must be the output of the command
+   **deployment.extensions/kafka-broker0 created**
+   Execute command **kubectl get pods** to see the kafka broker started
+   
+NAMESPACE     NAME                                             READY   STATUS    RESTARTS   AGE
+default       zookeeper-deployment-1-67786c9fc4-tp9kk          1/1     Running   0          34s
+default       kafka-broker0-8569c45479-zsfjq                   1/1     Running   0          15m
 
 ## Add the package dependencies to be upgraded with OS or other major component is updated
