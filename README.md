@@ -1,21 +1,37 @@
-# Kubernetes_deploy
-###########################server deployment#######################
-1. check out the https://github.com/Harish-sr/Kubernetes_deploy/ repo to deploy the kubernetes using the command
-git clone https://github.com/Harish-sr/Kubernetes_deploy.git
-2. update the kubernetes repo file into the yum repo using the file kuberepo.txt.
-    vi /etc/yum.repos.d/kubernetes.repo 
-    and past the contents of kuberepo.txt file
-3. change the permission of the filechmod 775 KubernetesWorker.sh
-4. run the KubernetesServer.sh script on the master node. In the output of the script run look for token like mentioned below
-5. save the token to be distributed to all the slave machines
-"kubeadm join 10.23.126.1:6443 --token 7qgrxo.rsky4j9dxha8w9q6 \
-    --discovery-token-ca-cert-hash sha256:9356ca0d1ce463d89a2f50c469e6f325c61b2a7eae9b8c7b48ba52a1fbd40f4c"
-    check "kubectl get pods --all-namespaces" [expect for dnscore pods all other pods should be running]
-6. Apply the network plugin flannel using the command
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml    
-7. wait for the flannel and coredns pods to start and goes to running state
-    keep checking the states of the pods using the command
-    "kubectl get pods --all-namespaces"
+# SanJose Data Platform Setup on Containers
+## Contents
+1. Kubernetes Deployment - Server
+2. Kubernetes Deployment - Client
+3. Application Deployment - Spark
+4. Application Deployment - Ambari
+5. Application Deployment - Hortonworks Data Platform
+
+## Kubernetes Deployment - Server
+1.  **Setup:** Change the user to root using command **sudo su** if you are not the root already.
+1.  **Setup:** Check out the https://github.com/Harish-sr/Kubernetes_deploy/ repo to deploy the kubernetes using the command
+**git clone https://github.com/Harish-sr/Kubernetes_deploy.git**
+
+    **Validation:** Check for a folder kubernetes_deploy to be created in your current location
+1.  **Setup:** Update the kubernetes repo file into the yum repo by coping the contents of file **kuberepo.txt** that is available in the folder where the kubernetes deployment repo gets downloaded to **/etc/yum.repos.d/kubernetes.repo** using vi editor
+
+    **Validation:** The command **yum repolist** should list the kubernetes repository added
+1.  **Setup:** Change the permission of the file KubernetesServer.sh using **filechmod 775 KubernetesServer.sh**
+    **Validation:** Perform ls -l command and verify if the permissions are changed
+1.  **Setup:** Run the KubernetesServer.sh script on the master node using the command **./KubernetesServer.sh**. 
+    **Validation:** 
+    1. In the output of the script look for token like the one below
+    **kubeadm join 10.23.126.1:6443 --token 7qgrxo.rsky4j9dxha8w9q6 \
+    --discovery-token-ca-cert-hash sha256:9356ca0d1ce463d89a2f50c469e6f325c61b2a7eae9b8c7b48ba52a1fbd40f4c**
+    1. Save the token from the previous step to be distributed to all the slave machines in later steps
+    1. Run the command **kubectl get pods --all-namespaces** which will list all the system pods created. 
+    1. Expect all system pods to be in running state except dnscore pods
+1.  **Setup:** Apply the network plugin **weave** using the commands
+    **export kubever=$(kubectl version | base64 | tr -d '\n')**
+    **kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"**
+    **Validation:** 
+    1. Wait for the weave to start after which wait for coredns pods to change state to running by repeatedly checking on executing the command
+    **kubectl get pods --all-namespaces**
+    
     command to add a slave later ############################
     command to resetup things #######################
     add the package dependencies to be upgraded with OS or other major component is updated
