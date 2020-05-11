@@ -7,6 +7,7 @@
 5. Application Deployment - Hortonworks Data Platform
 
 ## Kubernetes Deployment - Server
+The below commands are to be executed on kubernetes master.
 1.  **Setup:** Change the user to root using command **sudo su** if you are not the root already.
 1.  **Setup:** Check out the https://github.com/Harish-sr/Kubernetes_deploy/ repo to deploy the kubernetes using the command
 **git clone https://github.com/Harish-sr/Kubernetes_deploy.git**
@@ -16,8 +17,10 @@
 
     **Validation:** The command **yum repolist** should list the kubernetes repository added
 1.  **Setup:** Change the permission of the file KubernetesServer.sh using **filechmod 775 KubernetesServer.sh**
+    
     **Validation:** Perform ls -l command and verify if the permissions are changed
 1.  **Setup:** Run the KubernetesServer.sh script on the master node using the command **./KubernetesServer.sh**. 
+    
     **Validation:** 
     1. In the output of the script look for token like the one below
     **kubeadm join 10.23.126.1:6443 --token 7qgrxo.rsky4j9dxha8w9q6 \
@@ -28,24 +31,35 @@
 1.  **Setup:** Apply the network plugin **weave** using the commands
     **export kubever=$(kubectl version | base64 | tr -d '\n')**
     **kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"**
+    
     **Validation:** 
     1. Wait for the weave to start after which wait for coredns pods to change state to running by repeatedly checking on executing the command
     **kubectl get pods --all-namespaces**
     
-    command to add a slave later ############################
-    command to resetup things #######################
-    add the package dependencies to be upgraded with OS or other major component is updated
+    
+## Kubernetes Deployment - Worker 
+The below commands are to be executed on kubernetes worker.
+1.  **Setup:** Change the user to root using command **sudo su** if you are not the root already.
+1.  **Setup:** Check out the https://github.com/Harish-sr/Kubernetes_deploy/ repo to deploy the kubernetes using the command
+**git clone https://github.com/Harish-sr/Kubernetes_deploy.git**
 
- 
+    **Validation:** Check for a folder kubernetes_deploy to be created in your current location
+1.  **Setup:** Update the kubernetes repo file into the yum repo by coping the contents of file **kuberepo.txt** that is available in the folder where the kubernetes deployment repo gets downloaded to **/etc/yum.repos.d/kubernetes.repo** using vi editor
 
-####################Worker deployment #################
-1. update the kubernetes repo file into the yum repo using the file kuberepo.txt. which was downloaded from git
-    vi /etc/yum.repos.d/kubernetes.repo 
-    and past the contents of kuberepo.txt file
-    change the permission of the filechmod 775 KubernetesWorker.sh
-4.  run the Kubernetesworker.sh script on the worker nodes 
-5. RUN the captured token command from the master after the Kubernetesworker.sh is finished running.
-    check for all the new node added using "kubectl get nodes" on the master node
+    **Validation:** The command **yum repolist** should list the kubernetes repository added
+1.  **Setup:** Change the permission of the file KubernetesWorker.sh using **filechmod 775 KubernetesWorker.sh**
+    
+    **Validation:** Perform ls -l command and verify if the permissions are changed
+1.  **Setup:** Run the KubernetesWorker.sh script on the worker node using the command **./KubernetesWorker.sh**. 
+    
+    **Validation:** 
+    1. Run the command **kubectl get pods --all-namespaces** which will list all the system pods created. 
+    
+1.  **Setup:** Execute the saved token command from the master node setup similar to **kubeadm join 10.23.126.1:6443 --token 7qgrxo.rsky4j9dxha8w9q6 \
+    --discovery-token-ca-cert-hash sha256:9356ca0d1ce463d89a2f50c469e6f325c61b2a7eae9b8c7b48ba52a1fbd40f4c**.
+   **Validate:** Go back to master node to check for all the new worker nodes created using command **kubectl get nodes**
+    
+**NOTE:** All the worker nodes have to be setup within 24 hours after token generation on the master node. If we want to add nodes at any time after 24 hours, follow the below steps.
     
     
     ##############################Application deployment#############################
@@ -238,3 +252,8 @@ def isprime(n):
 nums = sc.parallelize(xrange(10000000))
 print nums.filter(isprime).count()
 After pasting in our code, press shift+enter or click the play icon to the right of our snippet. The Spark job will run and once again we'll have our result!
+
+
+command to add a slave later ############################
+    command to resetup things #######################
+    add the package dependencies to be upgraded with OS or other major component is updated
