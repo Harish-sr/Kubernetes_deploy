@@ -1,10 +1,13 @@
 # SanJose Data Platform Setup on Containers
 ## Contents
 1. Kubernetes Deployment - Server
-2. Kubernetes Deployment - Client
-3. Application Deployment - Spark
-4. Application Deployment - Ambari
-5. Application Deployment - Hortonworks Data Platform
+1. Kubernetes Deployment - Client
+1. Scaling Kubernetes and Adding Workers
+1. Removing Workers
+1. Reset Kubernetes master
+1. Application Deployment - Spark
+1. Application Deployment - Ambari
+1. Application Deployment - Hortonworks Data Platform
 
 ## Kubernetes Deployment - Server
 The below commands are to be executed on kubernetes master.
@@ -59,9 +62,41 @@ The below commands are to be executed on kubernetes worker.
     --discovery-token-ca-cert-hash sha256:9356ca0d1ce463d89a2f50c469e6f325c61b2a7eae9b8c7b48ba52a1fbd40f4c**.
    **Validate:** Go back to master node to check for all the new worker nodes created using command **kubectl get nodes**
     
-**NOTE:** All the worker nodes have to be setup within 24 hours after token generation on the master node. If we want to add nodes at any time after 24 hours, follow the below steps.
-    
-    
+**NOTE:** All the worker nodes have to be setup within 24 hours after token generation on the master node. If not or if more nodes are to be added later any time after 24 hours, follow the steps detailed in section **Scaling Kubernetes and adding more workers**.
+
+## Scaling Kubernetes and Adding Workers
+
+**Steps on the master node:**
+1. Execute command **kubeadm token create** which will generate output similar to 
+   **5didvk.d09sbcov8ph2amjw**
+1. To get the value of **--discovery-token-ca-cert-hash**, execute the following command chain on the master node,
+   **openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | \
+   openssl dgst -sha256 -hex | sed 's/^.* //'** 
+   The output of this command will be similar to 
+   **8cb2de97839780a412b93877f8507ad6c94f73add17d5d7058e91741c9d5ec78**
+1. With both the above tokens form the join command like, 
+   **kubeadm join 10.23.126.1:6443 --token 5didvk.d09sbcov8ph2amjw \
+    --discovery-token-ca-cert-hash sha256:8cb2de97839780a412b93877f8507ad6c94f73add17d5d7058e91741c9d5ec78**.
+
+**Steps on the worker nodes:**
+1. Follow all the steps mentioned for the worker node above and use the tokens generated in the previous steps under **Steps on the master node** for the join command.
+
+## Removing Workers
+1. Login to the node
+1. Execute command **sudo su** to change to root user
+1. Execute command **kubeadm reset** to reset master
+1. Execute command **rm -rf **
+1. Execute command **rm -rf **
+1. Execute command **yum remove kubeadm kubectl kubelet docker**
+
+## Reset Kubernetes master
+1. Login to the node
+1. Execute command **sudo su** to change to root user
+1. Execute command **kubeadm reset** to reset master
+1. Execute command **rm -rf **
+1. Execute command **rm -rf **
+1. Execute command **yum remove kubeadm kubectl kubelet docker**
+
     ##############################Application deployment#############################
 1. install the latest spark cluster using https://github.com/kubernetes/examples/tree/master/staging/spark
 2. download from git location"github clone https://github.com/kubernetes/examples.git"
