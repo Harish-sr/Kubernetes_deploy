@@ -260,7 +260,7 @@ Zeppelin needs the spark-master service to be running.
    
    Congratulations, you now know how many prime numbers there are within the first 10 million numbers!
 
-## Reset Kubernetes master
+## Application Deployment - Kafka
 **Setup:**
 1. Login to the kumernetes master
 1. Execute command **kubectl apply -f zoo-keeper.yaml** to start the zookeeper server before starting the kafka services
@@ -270,7 +270,9 @@ Zeppelin needs the spark-master service to be running.
    **Validation: kubectl get pods** The below must be the output of the command
 
 NAMESPACE     NAME                                             READY   STATUS    RESTARTS   AGE
+
 default       zookeeper-deployment-1-67786c9fc4-tp9kk          1/1     Running   0          34s
+
 
 1. Execute command **kubectl apply -f kafka-service.yaml** to start the service for kafka
    **Validation:** The below must be the output of the command
@@ -278,21 +280,33 @@ default       zookeeper-deployment-1-67786c9fc4-tp9kk          1/1     Running  
 1. Execute command **kubectl describe svc kafka-service** to get the output like below having the IP address of the kafka service
    copy the line **IP: 10.102.113.183** for further use
       
-
 Name:                     kafka-service
+
 Namespace:                default
+
 Labels:                   name=kafka
+
 Annotations:              kubectl.kubernetes.io/last-applied-configuration:
                             {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"name":"kafka"},"name":"kafka-service","namespace":"default"},"...
+                            
 Selector:                 app=kafka,id=0
+
 Type:                     NodePort
+
 IP:                       10.102.113.183
+
 Port:                     kafka-port  9092/TCP
+
 TargetPort:               9092/TCP
+
 NodePort:                 kafka-port  30030/TCP
+
 Endpoints:                <none>
+
 Session Affinity:         None
+
 External Traffic Policy:  Cluster
+
 Events:                   <none>
 
 
@@ -302,7 +316,9 @@ Events:                   <none>
    Execute command **kubectl get pods** to see the kafka broker started
    
 NAMESPACE     NAME                                             READY   STATUS    RESTARTS   AGE
+
 default       zookeeper-deployment-1-67786c9fc4-tp9kk          1/1     Running   0          34s
+
 default       kafka-broker0-8569c45479-zsfjq                   1/1     Running   0          15m
 
 ## Add the package dependencies to be upgraded with OS or other major component is updated
