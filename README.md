@@ -242,6 +242,7 @@ Zeppelin needs the spark-master service to be running.
 1. **Setup:** Validate the spark and Zeppelin setup using sample code 
    1. Run command **kubectl exec zeppelin-controller-ja09s -it pyspark -n spark-cluster** which will open up zeppelin as below
    1. Execute this Python snippet:
+      
       from math import sqrt; from itertools import count, islice
       
       def isprime(n):
