@@ -23,7 +23,8 @@ swapoff -a
 
 
 # install kubernetes and docker
-yum install kubeadm docker -y
+# yum install kubeadm docker -y
+yum install kubeadm-1.14.* kubectl-1.14.* kubelet-1.14.* docker kubernetes-cni-0.6.0
 
 # start docker and enable the same
 systemctl restart docker && systemctl enable docker
@@ -37,11 +38,6 @@ kubeadm init
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
-
-
-export kubever=$(kubectl version | base64 | tr -d '\n')
-kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"
-
 
 
 
