@@ -223,8 +223,10 @@ Zeppelin needs the spark-master service to be running.
 
       nums = sc.parallelize(xrange(10000000))
       print nums.filter(isprime).count()
+      
    **Validtion:** The below will be the output of this step
    664579
+   
    Congratulations, you now know how many prime numbers there are within the first 10 million numbers!
 
 ## Add the package dependencies to be upgraded with OS or other major component is updated
