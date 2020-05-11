@@ -146,6 +146,7 @@ The below commands are to be executed on kubernetes worker.
    **kubectl get pods -n spark-cluster**
    
    **Validation:** The below must be the output of the command
+   
    NAME                            READY     STATUS    RESTARTS   AGE
    spark-master-controller-5u0q5   1/1       Running   0          8m
    
@@ -153,24 +154,42 @@ The below commands are to be executed on kubernetes worker.
    **kubectl logs spark-master-controller-5u0q5 -n spark-cluster**
 
    **Validation:** The below must be the output of the command
-   **starting org.apache.spark.deploy.master.Master, logging to /opt/spark-1.5.1-bin-hadoop2.6/sbin/../logs/spark--     org.apache.spark.deploy.master.Master-1-spark-master-controller-g0oao.out
+   
+   starting org.apache.spark.deploy.master.Master, logging to /opt/spark-1.5.1-bin-hadoop2.6/sbin/../logs/spark--     org.apache.spark.deploy.master.Master-1-spark-master-controller-g0oao.out
+   
 Spark Command: /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java -cp /opt/spark-1.5.1-bin-hadoop2.6/sbin/../conf/:/opt/spark-1.5.1-bin-hadoop2.6/lib/spark-assembly-1.5.1-hadoop2.6.0.jar:/opt/spark-1.5.1-bin-hadoop2.6/lib/datanucleus-rdbms-3.2.9.jar:/opt/spark-1.5.1-bin-hadoop2.6/lib/datanucleus-core-3.2.10.jar:/opt/spark-1.5.1-bin-hadoop2.6/lib/datanucleus-api-jdo-3.2.6.jar -Xms1g -Xmx1g org.apache.spark.deploy.master.Master --ip spark-master --port 7077 --webui-port 8080
+
 ========================================
+
 15/10/27 21:25:05 INFO Master: Registered signal handlers for [TERM, HUP, INT]
+
 15/10/27 21:25:05 INFO SecurityManager: Changing view acls to: root
+
 15/10/27 21:25:05 INFO SecurityManager: Changing modify acls to: root
+
 15/10/27 21:25:05 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(root); users with modify permissions: Set(root)
+
 15/10/27 21:25:06 INFO Slf4jLogger: Slf4jLogger started
+
 15/10/27 21:25:06 INFO Remoting: Starting remoting
+
 15/10/27 21:25:06 INFO Remoting: Remoting started; listening on addresses :[akka.tcp://sparkMaster@spark-master:7077]
+
 15/10/27 21:25:06 INFO Utils: Successfully started service 'sparkMaster' on port 7077.
+
 15/10/27 21:25:07 INFO Master: Starting Spark master at spark://spark-master:7077
+
 15/10/27 21:25:07 INFO Master: Running Spark version 1.5.1
+
 15/10/27 21:25:07 INFO Utils: Successfully started service 'MasterUI' on port 8080.
+
 15/10/27 21:25:07 INFO MasterWebUI: Started MasterWebUI at http://spark-master:8080
+
 15/10/27 21:25:07 INFO Utils: Successfully started service on port 6066.
+
 15/10/27 21:25:07 INFO StandaloneRestServer: Started REST server for submitting applications on port 6066
-15/10/27 21:25:07 INFO Master: I have been elected leader! New state: ALIVE**
+
+15/10/27 21:25:07 INFO Master: I have been elected leader! New state: ALIVE
 
 1. **Setup:** Start your Spark workers
 The Spark workers do the heavy lifting in a Spark cluster. They provide execution resources and data cache capabilities for your program.
@@ -188,12 +207,17 @@ Use the examples/staging/spark/spark-worker-controller.yaml file to create a rep
    **kubectl get pods -n spark-cluster**
    
    **Validation:** The below must be the output of the command
+   
    NAME                            READY     STATUS    RESTARTS   AGE
+   
    spark-master-controller-5u0q5   1/1       Running   0          25m
+   
    spark-worker-controller-e8otp   1/1       Running   0          6m
+   
    spark-worker-controller-fiivl   1/1       Running   0          6m
+   
    spark-worker-controller-ytc7o   1/1       Running   0          6m
-
+   
 ## Application Deployment - Zeppelin
 
 Zeppelin needs the spark-master service to be running.
@@ -210,7 +234,9 @@ Zeppelin needs the spark-master service to be running.
    **kubectl get pods -l component=zeppelin -n spark-cluster**
    
    **Validation:** The below must be the output of the command
+   
    NAME                        READY     STATUS    RESTARTS   AGE
+   
    zeppelin-controller-ja09s   1/1       Running   0          53s
 
 1. **Setup:** Validate the spark and Zeppelin setup using sample code 
