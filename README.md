@@ -125,8 +125,11 @@ The below commands are to be executed on kubernetes worker.
    **kubectl create -f examples/staging/spark/namespace-spark-cluster.yaml**
    
    **Validation:** Execute command **kubectl get namespaces** which should list the spark cluster
+   
    NAME          LABELS             STATUS
+   
    default       <none>             Active
+   
    spark-cluster name=spark-cluster Active
    
 1. **Setup:** Start the Master service: This Master service is the master service for a Spark cluster.
