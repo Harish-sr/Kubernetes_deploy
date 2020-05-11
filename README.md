@@ -269,9 +269,9 @@ Zeppelin needs the spark-master service to be running.
    **service/zoo1 created**   
    **Validation: kubectl get pods** The below must be the output of the command
 
-NAMESPACE     NAME                                             READY   STATUS    RESTARTS   AGE
+   NAMESPACE     NAME                                             READY   STATUS    RESTARTS   AGE
 
-default       zookeeper-deployment-1-67786c9fc4-tp9kk          1/1     Running   0          34s
+   default       zookeeper-deployment-1-67786c9fc4-tp9kk          1/1     Running   0          34s
 
 
 1. Execute command **kubectl apply -f kafka-service.yaml** to start the service for kafka
@@ -280,34 +280,34 @@ default       zookeeper-deployment-1-67786c9fc4-tp9kk          1/1     Running  
 1. Execute command **kubectl describe svc kafka-service** to get the output like below having the IP address of the kafka service
    copy the line **IP: 10.102.113.183** for further use
       
-Name:                     kafka-service
+   Name:                     kafka-service
 
-Namespace:                default
+   Namespace:                default
 
-Labels:                   name=kafka
+   Labels:                   name=kafka
 
-Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+   Annotations:              kubectl.kubernetes.io/last-applied-configuration:
                             {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"name":"kafka"},"name":"kafka-service","namespace":"default"},"...
                             
-Selector:                 app=kafka,id=0
+   Selector:                 app=kafka,id=0
 
-Type:                     NodePort
+   Type:                     NodePort
 
-IP:                       10.102.113.183
+   IP:                       10.102.113.183
 
-Port:                     kafka-port  9092/TCP
+   Port:                     kafka-port  9092/TCP
 
-TargetPort:               9092/TCP
+   TargetPort:               9092/TCP
 
-NodePort:                 kafka-port  30030/TCP
+   NodePort:                 kafka-port  30030/TCP
 
-Endpoints:                <none>
+   Endpoints:                <none>
 
-Session Affinity:         None
+   Session Affinity:         None
 
-External Traffic Policy:  Cluster
+   External Traffic Policy:  Cluster
 
-Events:                   <none>
+   Events:                   <none>
 
 
 1. Execute command **kubectl apply -f kafka-broker.yaml** to deply the broker
@@ -315,10 +315,10 @@ Events:                   <none>
    **deployment.extensions/kafka-broker0 created**
    Execute command **kubectl get pods** to see the kafka broker started
    
-NAMESPACE     NAME                                             READY   STATUS    RESTARTS   AGE
+   NAMESPACE     NAME                                             READY   STATUS    RESTARTS   AGE
 
-default       zookeeper-deployment-1-67786c9fc4-tp9kk          1/1     Running   0          34s
+   default       zookeeper-deployment-1-67786c9fc4-tp9kk          1/1     Running   0          34s
 
-default       kafka-broker0-8569c45479-zsfjq                   1/1     Running   0          15m
+   default       kafka-broker0-8569c45479-zsfjq                   1/1     Running   0          15m
 
 ## Add the package dependencies to be upgraded with OS or other major component is updated
