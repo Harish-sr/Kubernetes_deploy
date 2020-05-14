@@ -14,6 +14,8 @@
 ## Kubernetes Deployment - Server
 The below commands are to be executed on kubernetes master.
 1.  **Setup:** Change the user to root using command **sudo su** if you are not the root already.
+1.  **Setup:** Install git package to checkout from Git using the command.
+   **yum install git**
 1.  **Setup:** Check out the https://github.com/Harish-sr/Kubernetes_deploy/ repo to deploy the kubernetes using the command
 **git clone https://github.com/Harish-sr/Kubernetes_deploy.git**
 
@@ -45,6 +47,8 @@ The below commands are to be executed on kubernetes master.
 ## Kubernetes Deployment - Worker 
 The below commands are to be executed on kubernetes worker.
 1.  **Setup:** Change the user to root using command **sudo su** if you are not the root already.
+1.  **Setup:** Install git package to checkout from Git using the command.
+   **yum install git**
 1.  **Setup:** Check out the https://github.com/Harish-sr/Kubernetes_deploy/ repo to deploy the kubernetes using the command
 **git clone https://github.com/Harish-sr/Kubernetes_deploy.git**
 
