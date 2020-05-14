@@ -13,7 +13,8 @@ echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
 # swap needs to be turned off
 swapoff -a
 # install the kubernetes and docker
-yum  install kubeadm docker -y
+# yum  install kubeadm docker -y
+yum install kubeadm-1.14.* kubectl-1.14.* kubelet-1.14.* docker kubernetes-cni-0.6.0
 #start tje docker and enable it
 systemctl restart docker && systemctl enable docker
 # start the kubelet and enable it
