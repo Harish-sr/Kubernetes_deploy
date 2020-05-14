@@ -5,6 +5,7 @@
 1. Scaling Kubernetes and Adding Workers
 1. Removing Workers
 1. Reset Kubernetes master
+1. stopping and restarting kubernetes
 1. Application Deployment - Spark
 1. Application Deployment - Zeppelin
 1. Application Deployment - Ambari
@@ -113,6 +114,12 @@ The below commands are to be executed on kubernetes worker.
 1. Execute command **kubeadm** and the command should not be found
 1. Execute command **docker** and the command should not be found
 
+## stopping/restarting kubernetes worker and master
+1. The kubernetes application launches itself automatically after a kubernetes worker\master is restarted. To enable the automatic restart we need to set swap to off in /etc/fstab using command 
+**vi /etc/fstab** look for swap and add a comment to that line like this 
+** #
+1. Once a worker is shutdown the master will stop scheduling pods to the worker in 5 mins and also redistribute the pods that were running in the shutdown pod on other workers.
+
 ## Application Deployment - Spark
 
 ### Prerequisites
@@ -122,7 +129,7 @@ The below commands are to be executed on kubernetes worker.
 1. Ensure Kubernetes cluster is running kube-dns or an equivalent integration
 
 ### Setup:
-1. **Setup:** Download and install the latest spark cluster from https://github.com/kubernetes/examples/tree/master/staging/spark using command  **github clone https://github.com/kubernetes/examples.git**
+1. **Setup:** Download and install the latest spark cluster from https://github.com/kubernetes/examples/tree/master/staging/spark using command  **git clone https://github.com/kubernetes/examples.git**
 
    **Validation:** Ensure a folder by name **examples** is created in current location.
    
@@ -251,13 +258,13 @@ Zeppelin needs the spark-master service to be running.
    1. Run command **kubectl exec zeppelin-controller-ja09s -it pyspark -n spark-cluster** which will open up zeppelin as below
    1. Execute this Python snippet:
       
-      from math import sqrt; from itertools import count, islice
-      
-      def isprime(n):
-          return n > 1 and all(n%i for i in islice(count(2), int(sqrt(n)-1)))
+   from math import sqrt; from itertools import count, islice
 
-      nums = sc.parallelize(xrange(10000000))
-      print nums.filter(isprime).count()
+   def isprime(n):
+    return n > 1 and all(n%i for i in islice(count(2), int(sqrt(n)-1)))
+
+    nums = sc.parallelize(xrange(10000000))
+    print nums.filter(isprime).count()
       
    **Validtion:** The below will be the output of this step
    664579
