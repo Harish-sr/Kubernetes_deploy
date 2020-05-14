@@ -93,8 +93,8 @@ The below commands are to be executed on kubernetes worker.
 1. Login to the node
 1. Execute command **sudo su** to change to root user
 1. Execute command **kubeadm reset** to reset master
-1. Execute command **rm -rf **
-1. Execute command **rm -rf **
+1. Execute command **rm -rf /etc/cni/net.d **
+1. Execute command **rm -rf $HOME/.kube/config**
 1. Execute command **yum remove kubeadm kubectl kubelet docker**
 
 **Validation:** 
@@ -106,8 +106,8 @@ The below commands are to be executed on kubernetes worker.
 1. Login to the node
 1. Execute command **sudo su** to change to root user
 1. Execute command **kubeadm reset** to reset master
-1. Execute command **rm -rf **
-1. Execute command **rm -rf **
+1. Execute command **rm -rf /etc/cni/net.d **
+1. Execute command **rm -rf $HOME/.kube/config**
 1. Execute command **yum remove kubeadm kubectl kubelet docker**
 
 **Validation:** 
@@ -117,7 +117,7 @@ The below commands are to be executed on kubernetes worker.
 ## stopping/restarting kubernetes worker and master
 1. The kubernetes application launches itself automatically after a kubernetes worker\master is restarted. To enable the automatic restart we need to set swap to off in /etc/fstab using command 
 **vi /etc/fstab** look for swap and add a comment to that line like this 
-** #
+** # /dev/mapper/centos-swap swap                    swap    defaults        0 0**
 1. Once a worker is shutdown the master will stop scheduling pods to the worker in 5 mins and also redistribute the pods that were running in the shutdown pod on other workers.
 
 ## Application Deployment - Spark
