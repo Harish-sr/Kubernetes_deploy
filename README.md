@@ -61,10 +61,7 @@ The below commands are to be executed on kubernetes worker.
     
     **Validation:** Perform ls -l command and verify if the permissions are changed
 1.  **Setup:** Run the KubernetesWorker.sh script on the worker node using the command **./KubernetesWorker.sh**. 
-    
-    **Validation:** 
-    1. Run the command **kubectl get pods --all-namespaces** which will list all the system pods created. 
-    
+           
 1.  The worker node setup should be done within 24 hours of master node setup. Please use the token from the master node setup which was saved while setting up the master. If the worker node setup is done after 24 hours please follow the steps in the next section **Scaling Kubernetes and Adding Workers** which involves generating a token in different way **Setup:** Execute the saved token command from the master node setup similar to **kubeadm join 10.23.126.1:6443 --token 7qgrxo.rsky4j9dxha8w9q6 \
     --discovery-token-ca-cert-hash sha256:9356ca0d1ce463d89a2f50c469e6f325c61b2a7eae9b8c7b48ba52a1fbd40f4c**.
    **Validation:** Go back to master node to check for all the new worker nodes created using command **kubectl get nodes**
